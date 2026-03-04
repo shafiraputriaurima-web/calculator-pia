@@ -13,12 +13,13 @@ html{
 
 body{
     align-items: center;
-    background: linear-gradient(320deg, #eb92be, #ffef78, #63c9b4);
+    background: linear-gradient(320deg, #eb92be);
     display: flex;
     font-family: 'Dosis', sans-serif;
     font-display: swap;
     height: inherit;
     justify-content: center;
+    
 }
 
 .wrapper{
@@ -34,7 +35,51 @@ body{
     flex-basis: 400px;
     height: auto;
     min-height: 540px;
-    padding: 20px 25px;
+    padding: 40px 25px 20px 25px;
+}
+
+.history-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    padding: 5px;
+}
+
+.clock-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.clock-icon::after { /* Jarum Jam */
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.7);
+    left: 50%;
+    top: 3px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.clock-icon::before { /* Jarum Menit */
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.7);
+    left: 50%;
+    top: 55%;
+    transform: translateY(-50%);
+    border-radius: 2px;
 }
 
 .screen{
@@ -49,7 +94,19 @@ body{
     overflow: auto;
     padding: 20px;
     text-align: right;
-    width: 326px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.history-btn:hover .clock-icon {
+    border-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.history-btn:hover .clock-icon::after,
+.history-btn:hover .clock-icon::before {
+    background: rgba(255, 255, 255, 1);
 }
 
 .calc-button-row{
@@ -104,6 +161,210 @@ body{
     flex-basis: 47%;
 }
 
+.history-modal {
+    position: absolute;
+    top: 60px;
+    left: 25px;
+    background: white;
+    width: 200px;
+    max-height: 250px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 15px;
+    overflow-y: auto;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
+
 .triple{
     flex-basis: 73%;
+}
+
+.hide {
+    display: none !important;
+}
+
+#history-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+#history-list li {
+    padding: 10px 5px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+}
+
+#history-list li:hover {
+    background: #f9f9f9;
+}
+
+#history-list li span {
+    display: block;
+    font-size: 11px;
+    color: #999;
+}
+
+#clear-history {
+    width: 100%;
+    background: #d72880;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between; /* Tombol Edit di kanan, Clear di kiri */
+    flex-direction: row-reverse;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#edit-toggle, #clear-all {
+    background: none;
+    border: none;
+    color: #d72880;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Lingkaran hapus yang ngumpet */
+.delete-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff4d4d;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: none; /* Ngumpet pas awal */
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Tanda minus di dalem lingkaran */
+.delete-circle::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: #ff4d4d;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Saat Mode Edit Aktif */
+.edit-mode .delete-circle {
+    display: block;
+}
+
+#history-list li {
+    display: flex;
+    align-items: center;
+    padding: 12px 5px;
+    transition: all 0.3s;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between; /* Kunci biar kepisah ke ujung */
+    align-items: center;
+    padding: 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}
+
+#edit-toggle {
+    background: none;
+    border: none;
+    color: #ff2d55; /* Warna pink/merah khas iPhone */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #8e8e93;
+    cursor: pointer;
+}
+
+#clear-all {
+    background: none;
+    border: none;
+    color: #ff3b30;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Class hide buat nyembunyiin elemen */
+.hide {
+    display: none !important;
+}
+
+#history-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.delete-circle {
+    width: 0; /* Awalnya 0 biar ngumpet */
+    height: 22px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    margin-right: 0;
+    position: relative;
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Tanda putih minus di tengah lingkaran */
+.delete-circle::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Pas mode edit aktif, lingkarannya muncul */
+.edit-mode .delete-circle {
+    width: 22px;
+    margin-right: 12px;
+    opacity: 1;
+}
+
+.history-item-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Tulisan mepet kanan kayak iPhone */
+    width: 100%;
+    cursor: pointer;
+}
+
+.op-text {
+    font-size: 0.8rem;
+    color: #8e8e93;
+}
+
+.res-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #000;
 }
