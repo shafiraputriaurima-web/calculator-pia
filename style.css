@@ -19,7 +19,13 @@ body{
     font-display: swap;
     height: inherit;
     justify-content: center;
-    
+    user-select: none;
+    -webkit-user-select: none; /* Buat Safari/iPhone */
+}
+
+button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .wrapper{
@@ -380,4 +386,5 @@ body{
     pointer-events: none; /* Biar nggak bisa diklik/ganggu */
     text-transform: lowercase;
 }
+
 
